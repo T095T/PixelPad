@@ -1,5 +1,12 @@
+{/*HOME PAGE */}
+import Navbar from "@/components/navbar";
 import { Room } from "./Room";
 
 export default function Home() {
-  return <h1 className="text-xl text-white ">PixelPad</h1>;
+  return(
+    <div className="h-full w-full flex justify-center items-center">
+       <Navbar/>
+
+    </div>
+  )
 }
