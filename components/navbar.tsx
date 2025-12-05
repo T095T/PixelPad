@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function Navbar() {
   return (
@@ -17,8 +18,14 @@ function Navbar() {
         <div className="flex flex-row gap-2 px-3 items-center mr-3">
           <h1 className="font-medium text-black hover:opacity-60">Features</h1>
           <h1 className="font-medium text-black hover:opacity-60">About</h1>
-          <button className="px-4 py-2 rounded-md border border-black text-black hover:bg-black hover:text-white transition
-">Get Started For Free</button>
+          <Link href="/editor" >
+          <button
+            className="px-4 py-2 rounded-md border border-black text-black hover:bg-black hover:text-white transition
+"
+          >
+            Get Started For Free
+          </button>
+          </Link>
         </div>
       </div>
     </>
