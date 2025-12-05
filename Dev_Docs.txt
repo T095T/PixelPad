@@ -1,0 +1,6 @@
+// Building a website inspired by Figma.
+
+//using fabricJS for canvas element.
+
+/usign liveblocks for interactive usage.
+//shadcn for ui
