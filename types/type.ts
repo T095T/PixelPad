@@ -14,8 +14,8 @@ export type CursorState =
     }
   | {
       mode: CursorMode.Chat;
-      message: string;
-      previousMessage: string | null;
+      message?: string;
+      previousMessage?: string | null;
     }
   | {
       mode: CursorMode.ReactionSelector;
@@ -182,11 +182,5 @@ export type CursorChatProps = {
   cursor: { x: number; y: number };
   cursorState: CursorState;
   setCursorState: (cursorState: CursorState) => void;
-  updateMyPresence: (
-    presence: Partial<{
-      cursor: { x: number; y: number };
-      cursorColor: string;
-      message: string;
-    }>
-  ) => void;
+  updateMyPresence: (presence: Partial<{ message: string; cursor: { x: number; y: number } }>) => void;
 };

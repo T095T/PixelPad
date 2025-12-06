@@ -4,35 +4,36 @@ import { CursorChatProps, CursorMode } from "@/types/type";
 import { transform } from "next/dist/build/swc/generated-native";
 import React from "react";
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  updateMyPresence({ message: e.target.value });
-  setCursorState({
-    mode: CursorMode.Chat,
-    previousMessage: e.target.value,
-  });
-};
-
-const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  if (e.key === "Enter") {
-    setCursorState({
-      mode: CursorMode.Chat,
-      //ts-ignore
-      previousMessage: cursorState.message,
-      message: "",
-    });
-  } else if (e.key === "Escape") {
-    setCursorState({
-        mode: CursorMode.Hidden,
-        previousMessage: ""
-    });
-  }
-};
 function CursorChat({
   cursor,
   cursorState,
   setCursorState,
   updateMyPresence,
 }: CursorChatProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateMyPresence({ message: e.target.value });
+    setCursorState({
+      mode: CursorMode.Chat,
+      message: e.target.value,
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (cursorState.mode === CursorMode.Chat) {
+        setCursorState({
+          mode: CursorMode.Chat,
+          previousMessage: cursorState.message ?? "",
+          message: "",
+        });
+      }
+    } else if (e.key === "Escape") {
+      setCursorState({
+        mode: CursorMode.Hidden,
+      });
+    }
+  };
+
   return (
     <div
       className="absolute top-0 left-0 "
@@ -46,9 +47,10 @@ function CursorChat({
               <div>{cursorState.previousMessage}</div>
             )}
             <input
-              className="z-10 w-60 border-none bg-transparent text-black placeholder:blue-300 outline-none autoFocus={true}"
+              className="z-10 w-60 border-none bg-transparent text-black placeholder:blue-300 outline-none "
               onChange={handleChange}
               onKeyDown={handleKeyDown}
+              autoFocus={true}
               placeholder={cursorState.message ? "" : "Type a message..."}
               value={cursorState.message}
               maxLength={50}
@@ -61,11 +63,10 @@ function CursorChat({
 }
 
 export default CursorChat;
-function updateMyPresence(arg0: { message: string; }) {
-    throw new Error("Function not implemented.");
+function updateMyPresence(arg0: { message: string }) {
+  throw new Error("Function not implemented.");
 }
 
-function setCursorState(arg0: { mode: CursorMode; previousMessage: string; }) {
-    throw new Error("Function not implemented.");
+function setCursorState(arg0: { mode: CursorMode; previousMessage: string }) {
+  throw new Error("Function not implemented.");
 }
-
