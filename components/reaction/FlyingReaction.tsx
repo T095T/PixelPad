@@ -11,7 +11,7 @@ const FlyingReaction = ({ x, y, timestamp, value }: Props) => (
   <div
     className={`pointer-events-none absolute select-none ${styles.disappear} text-${
       (timestamp % 5) + 2
-    }xl ${styles["goUp" + (timestamp % 5)]}`}
+    }xl ${styles["goUp" + (timestamp % 3)]}`}
     style={{ left: x, top: y }}
   >
     <div className={styles["leftRight" + (timestamp % 3)]}>
