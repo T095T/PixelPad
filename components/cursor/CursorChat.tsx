@@ -4,6 +4,7 @@ import { CursorChatProps, CursorMode } from "@/types/type";
 import { transform } from "next/dist/build/swc/generated-native";
 import React from "react";
 
+
 function CursorChat({
   cursor,
   cursorState,
@@ -42,12 +43,12 @@ function CursorChat({
       {cursorState.mode === CursorMode.Chat && (
         <>
           <CursorSVG color="#000" />
-          <div className="absolute left-2 top-5 bg-blue-300 px-3 py-2 text-sm leading-relaxed text-black rounded-md">
+          <div className="absolute left-2 top-5 bg-blue-500 px-3 py-2 text-sm leading-relaxed text-black rounded-md">
             {cursorState.previousMessage && (
               <div>{cursorState.previousMessage}</div>
             )}
             <input
-              className="z-10 w-60 border-none bg-transparent text-black placeholder:blue-300 outline-none "
+              className="z-10 w-60 border-none bg-transparent text-white placeholder:blue-300 outline-none "
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               autoFocus={true}
