@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { useThreads } from "@/liveblocks.config";
+import { useThreads } from "@liveblocks/react";
 
 // Returns the highest z-index of all threads
 export const useMaxZIndex = () => {
@@ -10,7 +10,7 @@ export const useMaxZIndex = () => {
   // calculate the max z-index
   return useMemo(() => {
     let max = 0;
-    for (const thread of threads) {
+    for (const thread of (threads??[])) {
       // @ts-ignore
       if (thread.metadata.zIndex > max) {
         // @ts-ignore

@@ -1,5 +1,5 @@
 {/*HOME PAGE */}
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/HomeNavbar";
 import { Room } from "./Room";
 
 export default function Home() {

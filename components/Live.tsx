@@ -1,9 +1,14 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import LiveCursors from "./cursor/LiveCursors";
-import { useMyPresence, useOthers } from "@liveblocks/react";
+import {
+  useBroadcastEvent,
+  useEventListener,
+  useMyPresence,
+  useOthers,
+} from "@liveblocks/react";
 import CursorChat from "./cursor/CursorChat";
-import { CursorMode, CursorState } from "@/types/type";
+import { CursorMode, CursorState, Reaction, ReactionEvent } from "@/types/type";
 import MyEmojiReactions from "./reaction/ReactionButton";
 import FlyingReaction from "./reaction/FlyingReaction";
 import { time } from "console";
@@ -17,6 +22,15 @@ export default function Live() {
   });
 
   const [reaction, setReaction] = useState<Reaction[]>([]);
+
+  const broadcast = useBroadcastEvent();
+
+//function to stop emojis from storing in the state
+useInterval(() => {
+  setReaction((reaction)=>reaction.filter((r) => Date.now() - r.timestamp < 4000))
+},1000)
+
+
 
   useInterval(() => {
     if (
@@ -33,8 +47,27 @@ export default function Live() {
           },
         ])
       );
+      broadcast({
+        x: cursor.x,
+        y: cursor.y,
+        value: cursorState.reaction,
+      });
     }
   }, 100);
+  //for other users[seeing reactions]
+  useEventListener((eventData) => {
+    const event = eventData.event as ReactionEvent;
+
+    setReaction((reactions) =>
+      reactions.concat([
+        {
+          point: { x: event.x, y: event.y },
+          value: event.value,
+          timestamp: Date.now(),
+        },
+      ])
+    );
+  });
 
   const handlePointerMove = useCallback((event: React.PointerEvent) => {
     event.preventDefault();
@@ -60,7 +93,7 @@ export default function Live() {
       updateMyPresence({ cursor: { x, y } }); //getting cursor position
       setCursorState((state: CursorState) =>
         cursorState.mode === CursorMode.Reaction
-          ? { ...state , isPressed: true }
+          ? { ...state, isPressed: true }
           : state
       );
     },

@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: false,  // Disable Tailwind v4 compiler
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'liveblocks.io',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
